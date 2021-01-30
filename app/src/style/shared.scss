@@ -51,25 +51,6 @@
 .target-variable {
   z-index: 1000;
   margin: $margin4 0px;
-
-  .rs-picker-select {
-    margin: $margin5 0px;
-  }
-  .rs-picker-subtle,
-  .rs-picker-subtle .rs-btn:focus,
-  .rs-picker-subtle .rs-picker-toggle:focus,
-  .rs-picker-subtle .rs-btn.rs-btn-focus,
-  .rs-picker-subtle .rs-picker-toggle.rs-btn-focus,
-  .rs-picker-subtle .rs-btn:hover,
-  .rs-picker-subtle .rs-picker-toggle:hover {
-    background-color: $bg-light;
-  }
-  .rs-picker-toggle.active {
-    background-color: $bg-light;
-  }
-  .rs-picker-toggle.hover {
-    background-color: $bg-light;
-  }
 }
 
 .rs-picker-menu {
@@ -109,6 +90,8 @@
   }
   .rs-steps-item-title {
     color: $white;
+    font-size: 18px;
+    font-weight: 600;
   }
   .rs-steps-item-status-finish,
   .rs-steps-item-status-wait {
@@ -126,5 +109,26 @@
   align-items: center;
   justify-content: center;
   .rs-btn {
+  }
+}
+
+.picker {
+  .rs-picker-select {
+    margin: $margin5 0px;
+  }
+  .rs-picker-subtle,
+  .rs-picker-subtle .rs-btn:focus,
+  .rs-picker-subtle .rs-picker-toggle:focus,
+  .rs-picker-subtle .rs-btn.rs-btn-focus,
+  .rs-picker-subtle .rs-picker-toggle.rs-btn-focus,
+  .rs-picker-subtle .rs-btn:hover,
+  .rs-picker-subtle .rs-picker-toggle:hover {
+    background-color: $bg-light;
+  }
+  .rs-picker-toggle.active {
+    background-color: $bg-light;
+  }
+  .rs-picker-toggle.hover {
+    background-color: $bg-light;
   }
 }

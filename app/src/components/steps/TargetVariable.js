@@ -17,11 +17,13 @@ class TargetVariable extends Component {
     return (
       <div className="target-variable">
         <div>Choose your target variable</div>
-        <SelectPicker
-          data={this.dataFormatter(this.props.dataHeaders)}
-          style={{ width: 224 }}
-          appearance="subtle"
-        />
+        <div className="picker">
+          <SelectPicker
+            data={this.dataFormatter(this.props.dataHeaders)}
+            style={{ width: 224 }}
+            appearance="subtle"
+          />
+        </div>
         <div>
           {" "}
           <Button onClick={() => this.props.onProgress()} appearance="primary">

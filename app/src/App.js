@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Button, Steps } from "rsuite";
+import { Button, Steps, Divider } from "rsuite";
 
-import CsvUpload from "./components/CsvUpload";
-import TargetVariable from "./components/TargetVariable";
-import SplitData from "./components/SplitData";
-import AlgorithmPicker from "./components/AlgorithmPicker";
+import CsvUpload from "./components/steps/CsvUpload";
+import TargetVariable from "./components/steps/TargetVariable";
+import SplitData from "./components/steps/SplitData";
+import AlgorithmPicker from "./components/steps/AlgorithmPicker";
 import Tooltip from "./components/Tooltip";
 
 class App extends Component {
@@ -54,7 +54,9 @@ class App extends Component {
           onClick={() => console.log(this.state.dataHeaders)}
         >
           Apparatus
+          <Divider />
         </h1>
+  
 
         <Steps current={this.state.step} vertical>
           <Steps.Item
@@ -70,7 +72,7 @@ class App extends Component {
             }
           />
           <Steps.Item
-             title={this.title("Choose target variable.", "Csv info")}
+            title={this.title("Choose target variable.", "Csv info")}
             description={
               <TargetVariable
                 onProgress={this.onProgress}
@@ -87,7 +89,6 @@ class App extends Component {
             description={<AlgorithmPicker onProgress={this.onProgress} />}
           />
         </Steps>
-        <Button appearance="primary"> Hello world </Button>
       </div>
     );
   }
