@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Steps, Divider } from "rsuite";
+import axios from "axios";
 
 import CsvUpload from "./components/steps/CsvUpload";
 import TargetVariable from "./components/steps/TargetVariable";
@@ -74,7 +75,13 @@ class App extends Component {
   };
 
   sendForm = () => {
-    console.log(this.state);
+    let formData = new FormData();
+    for (const key in this.state) {
+      formData.append(key, this.state[key]);
+    }
+    axios.post("http://127.0.0.1:5000/train", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
   };
 
   render() {
