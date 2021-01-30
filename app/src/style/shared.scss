@@ -103,6 +103,10 @@
 }
 
 .rs-steps {
+  .step-title {
+    display: flex;
+    align-items: center;
+  }
   .rs-steps-item-title {
     color: $white;
   }
@@ -111,5 +115,16 @@
     .rs-steps-item-title {
       color: $grey;
     }
+  }
+}
+
+.tooltip {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .rs-btn {
   }
 }

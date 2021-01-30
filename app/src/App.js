@@ -38,6 +38,14 @@ class App extends Component {
     this.setState({ step: 0 });
   };
 
+  title = (text, tooltip) => {
+    return (
+      <div className="step-title">
+        {text}&nbsp; <Tooltip tooltip={tooltip} />
+      </div>
+    );
+  };
+
   render() {
     return (
       <div className="app">
@@ -47,9 +55,10 @@ class App extends Component {
         >
           Apparatus
         </h1>
+
         <Steps current={this.state.step} vertical>
           <Steps.Item
-            title="Upload your csv."
+            title={this.title("Choose your csv.", "Csv info")}
             description={
               <CsvUpload
                 onProgress={this.onProgress}
@@ -61,7 +70,7 @@ class App extends Component {
             }
           />
           <Steps.Item
-            title="Waiting"
+             title={this.title("Choose target variable.", "Csv info")}
             description={
               <TargetVariable
                 onProgress={this.onProgress}
@@ -70,11 +79,11 @@ class App extends Component {
             }
           />
           <Steps.Item
-            title="Split your data."
+            title={this.title("Split your data.", "Csv info")}
             description={<SplitData onProgress={this.onProgress} />}
           />
           <Steps.Item
-            title="Choose your algorithm"
+            title={this.title("Choose your algorithm.", "Csv info")}
             description={<AlgorithmPicker onProgress={this.onProgress} />}
           />
         </Steps>
