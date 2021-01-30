@@ -22,11 +22,15 @@ class TargetVariable extends Component {
             data={this.dataFormatter(this.props.dataHeaders)}
             style={{ width: 224 }}
             appearance="subtle"
+            onChange={this.props.onTargetVariableChange}
           />
         </div>
         <div>
-          {" "}
-          <Button onClick={() => this.props.onProgress()} appearance="primary">
+          <Button
+            onClick={() => this.props.onProgress()}
+            disabled={!this.props.targetVariable}
+            appearance="primary"
+          >
             Next
           </Button>
         </div>

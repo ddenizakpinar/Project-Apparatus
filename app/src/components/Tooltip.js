@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Tooltip as Tp, Whisper, Button } from "rsuite";
+import { Tooltip as Tp, Whisper } from "rsuite";
 
 class Tooltip extends Component {
   render() {
@@ -12,7 +12,7 @@ class Tooltip extends Component {
           trigger="hover"
           speaker={tooltip}
         >
-          <i class="fas fa-info-circle"></i>
+          <i className="fas fa-info-circle"></i>
         </Whisper>
       </div>
     );

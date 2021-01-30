@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Steps, Divider } from "rsuite";
+import { Steps, Divider } from "rsuite";
 
 import CsvUpload from "./components/steps/CsvUpload";
 import TargetVariable from "./components/steps/TargetVariable";
@@ -13,6 +13,9 @@ class App extends Component {
     this.state = {
       step: 0,
       file: null,
+      targetVariable: null,
+      splitRatio: null,
+      algorithm: null,
     };
   }
 
@@ -34,8 +37,32 @@ class App extends Component {
     });
   };
 
+  onTargetVariableChange = (targetVariable) => {
+    this.setState({
+      targetVariable: targetVariable,
+    });
+  };
+
+  onSplitRatioChange = (splitRatio) => {
+    this.setState({
+      splitRatio: splitRatio,
+    });
+  };
+
+  onAlgorithmChange = (algorithm) => {
+    this.setState({
+      algorithm: algorithm,
+    });
+  };
+
   resetProgress = () => {
-    this.setState({ step: 0 });
+    this.setState({
+      step: 0,
+      file: null,
+      targetVariable: null,
+      splitRatio: null,
+      algorithm: null,
+    });
   };
 
   title = (text, tooltip) => {
@@ -44,6 +71,10 @@ class App extends Component {
         {text}&nbsp; <Tooltip tooltip={tooltip} />
       </div>
     );
+  };
+
+  sendForm = () => {
+    console.log(this.state);
   };
 
   render() {
@@ -56,8 +87,6 @@ class App extends Component {
           Apparatus
           <Divider />
         </h1>
-  
-
         <Steps current={this.state.step} vertical>
           <Steps.Item
             title={this.title("Choose your csv.", "Csv info")}
@@ -77,16 +106,31 @@ class App extends Component {
               <TargetVariable
                 onProgress={this.onProgress}
                 dataHeaders={this.state.dataHeaders}
+                targetVariable={this.state.targetVariable}
+                onTargetVariableChange={this.onTargetVariableChange}
               />
             }
           />
           <Steps.Item
             title={this.title("Split your data.", "Csv info")}
-            description={<SplitData onProgress={this.onProgress} />}
+            description={
+              <SplitData
+                onProgress={this.onProgress}
+                splitRatio={this.state.splitRatio}
+                onSplitRatioChange={this.onSplitRatioChange}
+              />
+            }
           />
           <Steps.Item
             title={this.title("Choose your algorithm.", "Csv info")}
-            description={<AlgorithmPicker onProgress={this.onProgress} />}
+            description={
+              <AlgorithmPicker
+                onProgress={this.onProgress}
+                sendForm={this.sendForm}
+                algorithm={this.state.algorithm}
+                onAlgorithmChange={this.onAlgorithmChange}
+              />
+            }
           />
         </Steps>
       </div>

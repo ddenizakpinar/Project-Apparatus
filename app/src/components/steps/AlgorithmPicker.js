@@ -13,9 +13,16 @@ class AlgorithmPicker extends Component {
               data={algorithms}
               style={{ width: 224 }}
               appearance="subtle"
+              onChange={this.props.onAlgorithmChange}
             />
           </div>
-          <Button appearance="primary">Start Training</Button>
+          <Button
+            onClick={this.props.sendForm}
+            disabled={!this.props.algorithm}
+            appearance="primary"
+          >
+            Start Training
+          </Button>
         </div>
       </div>
     );
