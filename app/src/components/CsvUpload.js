@@ -10,7 +10,6 @@ class CsvUpload extends Component {
     this.state = {
       columns: [],
       data: [],
-      file: null,
     };
   }
 
@@ -20,7 +19,7 @@ class CsvUpload extends Component {
     const headers = dataStringLines[0].split(
       /,(?![^"]*"(?:(?:[^"]*"){2})*[^"]*$)/
     );
-    console.log(headers);
+    this.props.setDataHeaders(headers);
     const list = [];
     for (let i = 1; i < dataStringLines.length; i++) {
       const row = dataStringLines[i].split(
@@ -59,10 +58,8 @@ class CsvUpload extends Component {
   // handle file upload
   handleFileUpload = (e) => {
     const file = e[e.length - 1].blobFile;
-    console.log(file);
-    this.setState({
-      file: file,
-    });
+    this.props.resetProgress();
+    this.props.onFileSelect(file);
     const reader = new FileReader();
     reader.onload = (evt) => {
       /* Parse data */
@@ -82,6 +79,7 @@ class CsvUpload extends Component {
     return (
       <div className="csv-upload">
         <Uploader
+          className="uploader"
           draggable
           onChange={this.handleFileUpload}
           accept=".csv,.xlsx,.xls"
@@ -103,10 +101,10 @@ class CsvUpload extends Component {
 
         <Button
           onClick={() => this.props.onProgress()}
-          disabled={!this.state.file}
+          disabled={!this.props.file}
           appearance="primary"
         >
-          Done!
+          Next
         </Button>
       </div>
     );

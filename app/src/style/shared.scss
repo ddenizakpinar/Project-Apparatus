@@ -1,98 +1,17 @@
 @import "../style/variables.scss";
-.steps {
-  > .step-container {
-    > .step {
-      display: flex;
-      flex-direction: column;
-
-      > .title-area {
-        display: flex;
-        align-items: center;
-        > .circle-content {
-          flex-shrink: 0;
-          margin-right: 12px;
-          width: 36px;
-          height: 36px;
-          border: 1px solid $grey;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: $grey;
-          font-weight: 600;
-          i {
-            font-size: 16px;
-          }
-        }
-
-        > .step-name {
-          color: $grey;
-          font-size: 20px;
-          width: 100%;
-        }
-      }
-
-      > .content-area {
-        display: flex;
-        > .tail {
-          margin: 24px 30px 24px 19px;
-
-          width: 1px;
-          background-color: $blue;
-        }
-      }
-    }
-
-    > .active {
-      > .title-area {
-        > .circle-content {
-          background-color: $blue;
-          border: 1px solid $blue;
-          color: $bg-dark;
-        }
-        > .step-name {
-          color: $white;
-        }
-      }
-    }
-
-    > .done {
-      > .title-area {
-        > .circle-content {
-          background-color: transparent;
-          border: 1px solid $blue;
-
-          i {
-            color: $blue;
-          }
-        }
-      }
-    }
-
-    > .error {
-      > .title-area {
-        > .circle-content {
-          background-color: transparent;
-          border: 1px solid $red;
-          i {
-            color: $red;
-          }
-        }
-        > .step-name {
-          color: $red;
-        }
-      }
-
-      > .content-area {
-        > .tail {
-          background-color: $red;
-        }
-      }
-    }
-  }
-}
 
 .csv-upload {
+  margin: 20px 0px;
+
+  .uploader {
+    margin: $margin5 0;
+  }
+  .rs-uploader-draggable
+    .rs-uploader-trigger-customize
+    .rs-uploader-trigger-btn {
+    color: white;
+    background-color: $bg-dark;
+  }
   > .sc-hHftDr {
     .sc-dlfnbm {
       background-color: $bg-dark;
@@ -126,5 +45,71 @@
   }
   .juOmcw:disabled {
     fill: $grey;
+  }
+}
+
+.target-variable {
+  z-index: 1000;
+  margin: $margin4 0px;
+
+  .rs-picker-select {
+    margin: $margin5 0px;
+  }
+  .rs-picker-subtle,
+  .rs-picker-subtle .rs-btn:focus,
+  .rs-picker-subtle .rs-picker-toggle:focus,
+  .rs-picker-subtle .rs-btn.rs-btn-focus,
+  .rs-picker-subtle .rs-picker-toggle.rs-btn-focus,
+  .rs-picker-subtle .rs-btn:hover,
+  .rs-picker-subtle .rs-picker-toggle:hover {
+    background-color: $bg-light;
+  }
+  .rs-picker-toggle.active {
+    background-color: $bg-light;
+  }
+  .rs-picker-toggle.hover {
+    background-color: $bg-light;
+  }
+}
+
+.rs-picker-menu {
+  background-color: $lightgrey;
+  .rs-picker-toggle:hover {
+    background-color: red;
+  }
+  .rs-picker-select-menu-item {
+    color: $white;
+  }
+  .rs-picker-menu .rs-picker-search-bar .rs-picker-search-bar-input {
+    background-color: $bg-dark;
+  }
+  .rs-picker-select-menu-item.rs-picker-select-menu-item-active,
+  .rs-picker-select-menu-item.rs-picker-select-menu-item-active:hover {
+    background-color: $lightgrey;
+  }
+}
+
+.split-data {
+  margin: $margin4 0px;
+
+  .rs-slider {
+    margin: $margin5 8px;
+    max-width: 500px;
+  }
+}
+
+.algorithm-picker {
+  margin: $margin4 0px;
+}
+
+.rs-steps {
+  .rs-steps-item-title {
+    color: $white;
+  }
+  .rs-steps-item-status-finish,
+  .rs-steps-item-status-wait {
+    .rs-steps-item-title {
+      color: $grey;
+    }
   }
 }

@@ -5,7 +5,7 @@ class SplitData extends Component {
   render() {
     return (
       <div className="split-data">
-        Decide your train data size.
+        <div className="text">Decide your train data size.</div>
         <Slider
           defaultValue={40}
           min={20}
@@ -18,7 +18,7 @@ class SplitData extends Component {
           }}
         />
         <Button onClick={() => this.props.onProgress()} appearance="primary">
-          Split!
+          Next
         </Button>
       </div>
     );
