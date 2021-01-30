@@ -20,7 +20,7 @@ class CsvUpload extends Component {
     const headers = dataStringLines[0].split(
       /,(?![^"]*"(?:(?:[^"]*"){2})*[^"]*$)/
     );
-
+    console.log(headers);
     const list = [];
     for (let i = 1; i < dataStringLines.length; i++) {
       const row = dataStringLines[i].split(
