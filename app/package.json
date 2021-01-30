@@ -10,10 +10,16 @@
     "formik": "^2.2.6",
     "node-sass": "^4.14.1",
     "react": "^17.0.1",
+    "react-csv-to-table": "0.0.4",
+    "react-csv-viewer": "^1.0.4",
+    "react-data-table-component": "^7.0.0-alpha-5",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
+    "rsuite": "^4.8.8",
     "sass": "^1.32.5",
+    "styled-components": "^5.2.1",
     "web-vitals": "^0.2.4",
+    "xlsx": "^0.16.9",
     "yup": "^0.32.8"
   },
   "scripts": {

@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+
+import "rsuite/dist/styles/rsuite-default.css";
 import "./style/shared.scss";
 import "./style/pages.scss";
 

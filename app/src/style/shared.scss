@@ -1,0 +1,130 @@
+@import "../style/variables.scss";
+.steps {
+  > .step-container {
+    > .step {
+      display: flex;
+      flex-direction: column;
+
+      > .title-area {
+        display: flex;
+        align-items: center;
+        > .circle-content {
+          flex-shrink: 0;
+          margin-right: 12px;
+          width: 36px;
+          height: 36px;
+          border: 1px solid $grey;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: $grey;
+          font-weight: 600;
+          i {
+            font-size: 16px;
+          }
+        }
+
+        > .step-name {
+          color: $grey;
+          font-size: 20px;
+          width: 100%;
+        }
+      }
+
+      > .content-area {
+        display: flex;
+        > .tail {
+          margin: 24px 30px 24px 19px;
+
+          width: 1px;
+          background-color: $blue;
+        }
+      }
+    }
+
+    > .active {
+      > .title-area {
+        > .circle-content {
+          background-color: $blue;
+          border: 1px solid $blue;
+          color: $bg-dark;
+        }
+        > .step-name {
+          color: $white;
+        }
+      }
+    }
+
+    > .done {
+      > .title-area {
+        > .circle-content {
+          background-color: transparent;
+          border: 1px solid $blue;
+
+          i {
+            color: $blue;
+          }
+        }
+      }
+    }
+
+    > .error {
+      > .title-area {
+        > .circle-content {
+          background-color: transparent;
+          border: 1px solid $red;
+          i {
+            color: $red;
+          }
+        }
+        > .step-name {
+          color: $red;
+        }
+      }
+
+      > .content-area {
+        > .tail {
+          background-color: $red;
+        }
+      }
+    }
+  }
+}
+
+.csv-upload {
+  > .sc-hHftDr {
+    .sc-dlfnbm {
+      background-color: $bg-dark;
+    }
+    .gOmDhk {
+      background-color: $bg-dark;
+      &:hover {
+        background-color: $bg-light;
+      }
+    }
+    .fVMMIP {
+      color: $white;
+    }
+    .cVpxlG {
+      color: $white;
+    }
+    .juOmcw {
+      fill: red;
+    }
+    .juOmcw:disabled {
+      fill: red;
+    }
+  }
+  .tLhxY {
+    background-color: $bg-dark;
+    color: $white;
+  }
+
+  .juOmcw {
+    fill: $white;
+  }
+  .juOmcw:disabled {
+    fill: $grey;
+  }
+}
