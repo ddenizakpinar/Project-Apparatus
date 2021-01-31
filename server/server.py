@@ -36,9 +36,11 @@ def train():
 
 @app.route('/predict', methods=['POST'])
 def predict():
+    model_file = request.form["model"]
+    loaded_model = jsonpickle.decode(model_file)
 
-    with open('model (11).json', 'r') as file:
-        loaded_model = jsonpickle.decode(str(file.read()))
+    # with open('model (20).json', 'r') as file:
+    #     loaded_model = jsonpickle.decode(str(file.read()))
 
     result = loaded_model.predict(
         [[1, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 33, 3, 3]])
