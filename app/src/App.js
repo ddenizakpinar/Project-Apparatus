@@ -17,6 +17,7 @@ class App extends Component {
       targetVariable: null,
       splitRatio: null,
       algorithm: null,
+      model: null,
     };
   }
 
@@ -74,14 +75,43 @@ class App extends Component {
     );
   };
 
-  sendForm = () => {
+  sendForm = async () => {
+    const FileDownload = require("js-file-download");
     let formData = new FormData();
     for (const key in this.state) {
       formData.append(key, this.state[key]);
     }
-    axios.post("http://127.0.0.1:5000/train", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    await axios
+      .post("http://127.0.0.1:5000/train", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((res) => {
+        FileDownload(res.data, "model.json");
+        this.setState(
+          {
+            model: res.data,
+          },
+          () => {
+            console.log(this.state);
+          }
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  predict = async () => {
+    let formData = new FormData();
+    formData.append("file", this.state.model);
+    await axios
+      .post("http://127.0.0.1:5000/predict", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   render() {
@@ -92,6 +122,7 @@ class App extends Component {
           onClick={() => console.log(this.state.dataHeaders)}
         >
           Apparatus
+          <div onClick={this.predict}>Predict</div>
           <Divider />
         </h1>
         <Steps current={this.state.step} vertical>
