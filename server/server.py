@@ -3,7 +3,7 @@ from flask_cors import CORS
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, LogisticRegression
 import pickle
 import io
 import gzip
@@ -22,20 +22,42 @@ def train():
     targetVariable, splitRatio = form['targetVariable'], form['splitRatio']
 
     df = pd.read_csv(file)
-    X = df.drop(targetVariable, axis=1)
-    y = df[targetVariable]
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, train_size=int(splitRatio)/100, random_state=4)
+    #
 
-    model = LinearRegression(fit_intercept=True)
+    # include = ['Age', 'Sex', 'Embarked', 'Survived']  # Only four features
+    #df_ = df[include]
+    df_ = df
+
+    categoricals = []
+    for col, col_type in df_.dtypes.iteritems():
+        if col_type == 'O':
+            categoricals.append(col)
+        else:
+            df_[col].fillna(0, inplace=True)
+
+    df_ohe = pd.get_dummies(df_, columns=categoricals, dummy_na=True)
+
+    x = df_ohe[df_ohe.columns.difference([targetVariable])]
+    y = df_ohe[targetVariable]
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        x, y, train_size=int(splitRatio)/100, random_state=4)
+
+    model = LogisticRegression()
     model.fit(X_train, y_train)
 
+    model_columns = list(x.columns)
+
+    mc = jsonpickle.encode(model_columns)
     jp = jsonpickle.encode(model)
-    return jsonify({'model': jp})
+
+    return jsonify({'model': jp, 'columns': mc})
 
 
 @app.route('/predict', methods=['POST'])
 def predict():
+
+    #include = ['Age', 'Sex', 'Embarked']
 
     model_file = request.form["model"]
     loaded_model = jsonpickle.decode(model_file)
@@ -43,10 +65,17 @@ def predict():
     inputs = request.form["inputs"]
     load_inputs = json.loads(inputs)
 
-    df = pd.DataFrame(load_inputs, index=[0])
+    model_columns = request.form["columns"]
+    load_model_columns = json.loads(model_columns)
 
-    # with open('model (20).json', 'r') as file:
-    #     loaded_model = jsonpickle.decode(str(file.read()))
+    df = pd.DataFrame([load_inputs.values()], columns=load_inputs.keys())
+
+   # df = df[include]
+
+    df2 = pd.get_dummies(df)
+    merge = pd.concat([df, df2], axis=1)
+
+    df = merge.reindex(columns=load_model_columns, fill_value=0)
 
     result = loaded_model.predict(df)
 

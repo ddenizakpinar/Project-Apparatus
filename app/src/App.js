@@ -3,6 +3,7 @@ import { Steps, Divider } from "rsuite";
 import axios from "axios";
 
 import UploadCsv from "./components/steps/UploadCsv";
+import EliminateData from "./components/steps/EliminateData";
 import TargetVariable from "./components/steps/TargetVariable";
 import SplitData from "./components/steps/SplitData";
 import PickAlgorithm from "./components/steps/PickAlgorithm";
@@ -21,6 +22,7 @@ class App extends Component {
       model: null,
       inputs: {},
       prediction: "",
+      selectedDataHeaders: null,
     };
   }
 
@@ -39,6 +41,19 @@ class App extends Component {
   setDataHeaders = (dataHeaders) => {
     this.setState({
       dataHeaders: dataHeaders,
+      selectedDataHeaders: dataHeaders,
+    });
+  };
+
+  setSelectedDataHeaders = (selectedDataHeaders) => {
+    this.setState({
+      selectedDataHeaders: selectedDataHeaders,
+    });
+  };
+
+  selectAllDataHeaders = () => {
+    this.setState({
+      selectedDataHeaders: this.state.dataHeaders,
     });
   };
 
@@ -98,10 +113,10 @@ class App extends Component {
       })
       .then((res) => {
         FileDownload(res.data, "model.json");
-        console.log(res);
         this.setState(
           {
             model: res.data.model,
+            columns: res.data.columns,
           },
           () => {
             this.onProgress();
@@ -116,6 +131,7 @@ class App extends Component {
   predict = async () => {
     let formData = new FormData();
     formData.append("model", this.state.model);
+    formData.append("columns", this.state.columns);
     formData.append("inputs", JSON.stringify(this.state.inputs));
     await axios
       .post("http://127.0.0.1:5000/predict", formData, {
@@ -146,6 +162,19 @@ class App extends Component {
                 file={this.state.file}
                 setDataHeaders={this.setDataHeaders}
                 resetProgress={this.resetProgress}
+              />
+            }
+          />
+          <Steps.Item
+            title={this.title("Choose or Eliminate.", "Csv info")}
+            description={
+              <EliminateData
+                dataHeaders={this.state.dataHeaders}
+                selectedDataHeaders={this.state.selectedDataHeaders}
+                setDataHeaders={this.setDataHeaders}
+                setSelectedDataHeaders={this.setSelectedDataHeaders}
+                onProgress={this.onProgress}
+                selectAllDataHeaders={this.selectAllDataHeaders}
               />
             }
           />

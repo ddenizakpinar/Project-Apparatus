@@ -13,8 +13,9 @@ class TestModel extends Component {
       <div className="test-model">
         {dataHeaders
           ?.filter((x) => x !== targetVariable)
-          ?.map((header) => (
+          ?.map((header, index) => (
             <Input
+              key={index}
               placeholder={header}
               onChange={(value) => this.props.setInput(header, value)}
             />
@@ -22,7 +23,9 @@ class TestModel extends Component {
         <Button onClick={this.props.predict} appearance="primary">
           Make Prediction
         </Button>
-        <div>Response: {this.props.prediction}</div>
+        <div>
+          Response: <span className="prediction">{this.props.prediction}</span>
+        </div>
       </div>
     );
   }

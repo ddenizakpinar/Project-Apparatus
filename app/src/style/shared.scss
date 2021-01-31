@@ -52,6 +52,23 @@
   z-index: 1000;
   margin: $margin4 0px;
 }
+.eliminate-data {
+  z-index: 1000;
+  margin: $margin4 0px;
+
+  .select-all {
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+  }
+
+  .rs-divider-horizontal {
+    margin: 12px;
+  }
+  .check-boxes {
+    margin: $margin5 0px;
+  }
+}
 
 .rs-picker-menu {
   background-color: $lightgrey;
@@ -141,12 +158,19 @@
     display: inline;
     width: 45%;
   }
-
+  .rs-input {
+    color: $white;
+    border: 1px solid transparent;
+  }
   button {
     margin: $margin5 0px;
     display: block;
   }
 
+  .prediction {
+    color: $white;
+    font-weight: 600;
+  }
   @media screen and (max-width: 578px) {
     input {
       width: 100%;
