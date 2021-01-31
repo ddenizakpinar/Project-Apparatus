@@ -132,3 +132,25 @@
     background-color: $bg-light;
   }
 }
+
+.test-model {
+  input {
+    background-color: $bg-light;
+    margin: $margin1 0px;
+    margin-right: $margin2;
+    display: inline;
+    width: 45%;
+  }
+
+  button {
+    margin: $margin5 0px;
+    display: block;
+  }
+
+  @media screen and (max-width: 578px) {
+    input {
+      width: 100%;
+      margin: $margin1 0px;
+    }
+  }
+}

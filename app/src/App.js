@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { Steps, Divider } from "rsuite";
 import axios from "axios";
 
-import CsvUpload from "./components/steps/CsvUpload";
+import UploadCsv from "./components/steps/UploadCsv";
 import TargetVariable from "./components/steps/TargetVariable";
 import SplitData from "./components/steps/SplitData";
-import AlgorithmPicker from "./components/steps/AlgorithmPicker";
+import PickAlgorithm from "./components/steps/PickAlgorithm";
+import TestModel from "./components/steps/TestModel";
 import Tooltip from "./components/Tooltip";
 
 class App extends Component {
@@ -18,6 +19,8 @@ class App extends Component {
       splitRatio: null,
       algorithm: null,
       model: null,
+      inputs: {},
+      prediction: "",
     };
   }
 
@@ -67,6 +70,14 @@ class App extends Component {
     });
   };
 
+  setInput = (header, value) => {
+    const newInputs = {
+      ...this.state.inputs,
+      [header]: value,
+    };
+    this.setState({ inputs: newInputs });
+  };
+
   title = (text, tooltip) => {
     return (
       <div className="step-title">
@@ -87,12 +98,13 @@ class App extends Component {
       })
       .then((res) => {
         FileDownload(res.data, "model.json");
+        console.log(res);
         this.setState(
           {
-            model: res.data,
+            model: res.data.model,
           },
           () => {
-            console.log(this.state);
+            this.onProgress();
           }
         );
       })
@@ -104,11 +116,14 @@ class App extends Component {
   predict = async () => {
     let formData = new FormData();
     formData.append("model", this.state.model);
+    formData.append("inputs", JSON.stringify(this.state.inputs));
     await axios
       .post("http://127.0.0.1:5000/predict", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
-      .then((res) => {})
+      .then((res) => {
+        this.setState({ prediction: res.data });
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -117,19 +132,15 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <h1
-          className="title"
-          onClick={() => console.log(this.state.dataHeaders)}
-        >
+        <h1 className="title">
           Apparatus
-          <div onClick={this.predict}>Predict</div>
           <Divider />
         </h1>
         <Steps current={this.state.step} vertical>
           <Steps.Item
             title={this.title("Choose your csv.", "Csv info")}
             description={
-              <CsvUpload
+              <UploadCsv
                 onProgress={this.onProgress}
                 onFileSelect={this.onFileSelect}
                 file={this.state.file}
@@ -162,11 +173,24 @@ class App extends Component {
           <Steps.Item
             title={this.title("Choose your algorithm.", "Csv info")}
             description={
-              <AlgorithmPicker
+              <PickAlgorithm
                 onProgress={this.onProgress}
                 sendForm={this.sendForm}
                 algorithm={this.state.algorithm}
                 onAlgorithmChange={this.onAlgorithmChange}
+              />
+            }
+          />
+          <Steps.Item
+            title={this.title("Test your model.", "Csv info")}
+            description={
+              <TestModel
+                dataHeaders={this.state.dataHeaders}
+                targetVariable={this.state.targetVariable}
+                inputs={this.state.inputs}
+                setInput={this.setInput}
+                predict={this.predict}
+                prediction={this.state.prediction}
               />
             }
           />

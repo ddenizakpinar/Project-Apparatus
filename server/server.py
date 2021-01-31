@@ -31,18 +31,23 @@ def train():
     model.fit(X_train, y_train)
 
     jp = jsonpickle.encode(model)
-    return jsonify(jp)
+    return jsonify({'model': jp})
 
 
 @app.route('/predict', methods=['POST'])
 def predict():
+
     model_file = request.form["model"]
     loaded_model = jsonpickle.decode(model_file)
+
+    inputs = request.form["inputs"]
+    load_inputs = json.loads(inputs)
+
+    df = pd.DataFrame(load_inputs, index=[0])
 
     # with open('model (20).json', 'r') as file:
     #     loaded_model = jsonpickle.decode(str(file.read()))
 
-    result = loaded_model.predict(
-        [[1, 1, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 33, 3, 3]])
-    print(result)
-    return f'Hello'
+    result = loaded_model.predict(df)
+
+    return str(result[0])
