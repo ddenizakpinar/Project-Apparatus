@@ -10,6 +10,7 @@ import gzip
 import joblib
 import jsonpickle
 import json
+from sklearn import metrics
 
 app = Flask(__name__)
 CORS(app)
@@ -19,14 +20,17 @@ CORS(app)
 def train():
     file = request.files['file']
     form = request.form
-    targetVariable, splitRatio = form['targetVariable'], form['splitRatio']
+    targetVariable, splitRatio, selectedDataHeaders = form[
+        'targetVariable'], form['splitRatio'], form['selectedDataHeaders']
+
 
     df = pd.read_csv(file)
-    #
 
-    # include = ['Age', 'Sex', 'Embarked', 'Survived']  # Only four features
-    #df_ = df[include]
-    df_ = df
+    inc = [str(i) for i in selectedDataHeaders.split(",")]
+
+    df_ = df[inc]
+    #df_ = df
+    print(df_)
 
     categoricals = []
     for col, col_type in df_.dtypes.iteritems():
@@ -43,21 +47,26 @@ def train():
     X_train, X_test, y_train, y_test = train_test_split(
         x, y, train_size=int(splitRatio)/100, random_state=4)
 
-    model = LogisticRegression()
+    model = LinearRegression()
     model.fit(X_train, y_train)
 
     model_columns = list(x.columns)
 
+    Y_pred = model.predict(X_test)
+
+    score_model = round(model.score(X_test, y_test), 2)
+
+    mae_model = round(metrics.mean_absolute_error(y_test, Y_pred), 4)
+    mse_model = round(metrics.mean_squared_error(y_test, Y_pred), 4)
+
     mc = jsonpickle.encode(model_columns)
     jp = jsonpickle.encode(model)
 
-    return jsonify({'model': jp, 'columns': mc})
+    return jsonify({'model': jp, 'columns': mc, 'mae': mae_model, 'mse': mse_model, 'score': score_model})
 
 
 @app.route('/predict', methods=['POST'])
 def predict():
-
-    #include = ['Age', 'Sex', 'Embarked']
 
     model_file = request.form["model"]
     loaded_model = jsonpickle.decode(model_file)
@@ -69,8 +78,6 @@ def predict():
     load_model_columns = json.loads(model_columns)
 
     df = pd.DataFrame([load_inputs.values()], columns=load_inputs.keys())
-
-   # df = df[include]
 
     df2 = pd.get_dummies(df)
     merge = pd.concat([df, df2], axis=1)

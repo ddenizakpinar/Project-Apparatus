@@ -186,6 +186,7 @@ class App extends Component {
                 dataHeaders={this.state.dataHeaders}
                 targetVariable={this.state.targetVariable}
                 onTargetVariableChange={this.onTargetVariableChange}
+                selectedDataHeaders={this.state.selectedDataHeaders}
               />
             }
           />
@@ -215,6 +216,7 @@ class App extends Component {
             description={
               <TestModel
                 dataHeaders={this.state.dataHeaders}
+                selectedDataHeaders={this.state.selectedDataHeaders}
                 targetVariable={this.state.targetVariable}
                 inputs={this.state.inputs}
                 setInput={this.setInput}

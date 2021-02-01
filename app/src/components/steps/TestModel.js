@@ -8,10 +8,10 @@ class TestModel extends Component {
   }
 
   render() {
-    const { dataHeaders, targetVariable } = this.props;
+    const { selectedDataHeaders, targetVariable } = this.props;
     return (
       <div className="test-model">
-        {dataHeaders
+        {selectedDataHeaders
           ?.filter((x) => x !== targetVariable)
           ?.map((header, index) => (
             <Input

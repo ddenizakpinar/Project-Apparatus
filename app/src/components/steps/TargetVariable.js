@@ -19,7 +19,7 @@ class TargetVariable extends Component {
         <div>Choose your target variable</div>
         <div className="picker">
           <SelectPicker
-            data={this.dataFormatter(this.props.dataHeaders)}
+            data={this.dataFormatter(this.props.selectedDataHeaders)}
             style={{ width: 224 }}
             appearance="subtle"
             onChange={this.props.onTargetVariableChange}
