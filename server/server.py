@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression, LogisticRegression
+from sklearn import svm
 import pickle
 import io
 import gzip
@@ -20,17 +21,14 @@ CORS(app)
 def train():
     file = request.files['file']
     form = request.form
-    targetVariable, splitRatio, selectedDataHeaders = form[
-        'targetVariable'], form['splitRatio'], form['selectedDataHeaders']
-
+    targetVariable, splitRatio, selectedDataHeaders, algorithm = form[
+        'targetVariable'], form['splitRatio'], form['selectedDataHeaders'], form['algorithm']
 
     df = pd.read_csv(file)
 
     inc = [str(i) for i in selectedDataHeaders.split(",")]
 
     df_ = df[inc]
-    #df_ = df
-    print(df_)
 
     categoricals = []
     for col, col_type in df_.dtypes.iteritems():
@@ -47,7 +45,13 @@ def train():
     X_train, X_test, y_train, y_test = train_test_split(
         x, y, train_size=int(splitRatio)/100, random_state=4)
 
-    model = LinearRegression()
+    switcher = {
+        1: LinearRegression(),
+        2: LogisticRegression(),
+        4: svm.SVC(kernel='linear')
+    }
+
+    model = switcher[int(algorithm)]
     model.fit(X_train, y_train)
 
     model_columns = list(x.columns)

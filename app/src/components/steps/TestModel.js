@@ -8,9 +8,14 @@ class TestModel extends Component {
   }
 
   render() {
-    const { selectedDataHeaders, targetVariable } = this.props;
+    const { selectedDataHeaders, targetVariable, info } = this.props;
     return (
       <div className="test-model">
+        <div className="info">
+          <div>Mean Absolute Error (MAE): {info?.mae}</div>
+          <div>Root mean squared error (RMSE): {info?.mse}</div>
+          <div>Score: {info?.score}</div>
+        </div>
         {selectedDataHeaders
           ?.filter((x) => x !== targetVariable)
           ?.map((header, index) => (

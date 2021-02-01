@@ -82,7 +82,7 @@ class CsvUpload extends Component {
           className="uploader"
           draggable
           onChange={this.handleFileUpload}
-          accept=".csv,.xlsx,.xls"
+          accept=".csv"
           type="file"
           autoUpload={false}
           multiple={false}
