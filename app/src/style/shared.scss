@@ -111,6 +111,9 @@
     font-size: 18px;
     font-weight: 600;
   }
+  .rs-steps-item-content {
+    color: $grey;
+  }
   .rs-steps-item-status-finish,
   .rs-steps-item-status-wait {
     .rs-steps-item-title {

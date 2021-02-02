@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Steps, Divider, Button } from "rsuite";
+import { Steps, Divider } from "rsuite";
 import axios from "axios";
 
 import UploadCsv from "./components/steps/UploadCsv";
@@ -160,7 +160,7 @@ class App extends Component {
         </h1>
         <Steps current={this.state.step} vertical>
           <Steps.Item
-            title={this.title("Choose your csv.", "Csv info")}
+            title={this.title("Choose your csv.", "Upload any csv file")}
             description={
               this.state.step >= 0 ? (
                 <UploadCsv
@@ -174,7 +174,10 @@ class App extends Component {
             }
           />
           <Steps.Item
-            title={this.title("Choose or Eliminate.", "Csv info")}
+            title={this.title(
+              "Choose or Eliminate.",
+              "Eliminate columns which you think is not important for prediction"
+            )}
             description={
               this.state.step >= 1 ? (
                 <EliminateData
@@ -189,7 +192,10 @@ class App extends Component {
             }
           />
           <Steps.Item
-            title={this.title("Choose target variable.", "Csv info")}
+            title={this.title(
+              "Choose target variable.",
+              "Pick the data you want to predict"
+            )}
             description={
               this.state.step >= 2 ? (
                 <TargetVariable
@@ -203,7 +209,7 @@ class App extends Component {
             }
           />
           <Steps.Item
-            title={this.title("Split your data.", "Csv info")}
+            title={this.title("Split your data.", "Decide the ratio of training data")}
             description={
               this.state.step >= 3 ? (
                 <SplitData
@@ -215,7 +221,7 @@ class App extends Component {
             }
           />
           <Steps.Item
-            title={this.title("Choose your algorithm.", "Csv info")}
+            title={this.title("Choose your algorithm.", "Choose a algorithm to build your model")}
             description={
               this.state.step >= 4 ? (
                 <PickAlgorithm
@@ -228,7 +234,7 @@ class App extends Component {
             }
           />
           <Steps.Item
-            title={this.title("Test your model.", "Csv info")}
+            title={this.title("Test your model.", "Test the prediction of your model")}
             description={
               this.state.step >= 5 ? (
                 <TestModel

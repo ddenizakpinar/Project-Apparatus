@@ -23,8 +23,10 @@ class EliminateData extends Component {
           inline
           name="checkboxList"
         >
-          {this.props.dataHeaders?.map((header) => (
-            <Checkbox value={header}>{header}</Checkbox>
+          {this.props.dataHeaders?.map((header, index) => (
+            <Checkbox key={index} value={header}>
+              {header}
+            </Checkbox>
           ))}
         </CheckboxGroup>
         <div>
